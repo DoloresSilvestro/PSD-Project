@@ -18,4 +18,14 @@ Gli elementi principali sono:
 • nodoNext: puntatore al nodo successivo, per la gestione delle collisioni mediante lista collegata.
 */
 
+Cliente** inizializzaTabellaClienti();
+void inserisciCliente(Cliente** tabella, const char* codiceFiscale, const char* nome, const char* cognome);
+Cliente* cercaCliente(Cliente** tabella, const char* codiceFiscale);
+int rimuoviCliente(Cliente** tabella, const char* codiceFiscale);
+void stampaClienti(Cliente** tabella);
+void liberaTabellaClienti(Cliente** tabella);
+unsigned int hash(const char* codiceFiscale);
+
+#endif
+
 
