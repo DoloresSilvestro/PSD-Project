@@ -158,3 +158,59 @@ int rimuoviCliente(Cliente** tabella, const char* codiceFiscale) {
 	}
 	return 0;
 }
+
+/*
+void stampaClienti(Cliente** tabella)
+Specifica Sintattica:
+	stampaClienti(Cliente**) -> void
+
+Specifica Semantica:
+	stampaClienti(tabella) -> void
+
+Pre-condizioni:
+1. La tabella hash tabella deve essere stata correttamente inizializzata.
+
+Post-condizioni:
+La funzione non restituisce alcun valore, ma ha un effetto collaterale (side effect): stampa a schermo i dati di tutti i clienti presenti nella tabella.
+*/
+
+void stampaClienti(Cliente** tabella) {
+    	for (int i = 0; i < DIM_TABELLA; i++) {
+        	Cliente* nodoCorrente = tabella[i];
+        	while (nodoCorrente) {
+            		printf("CF: %s | Nome: %s %s\n",
+				nodoCorrente->codiceFiscale,
+				nodoCorrente->nome,
+				nodoCorrente->cognome);
+            		nodoCorrente = nodoCorrente->nodoNext;
+        	}
+    	}
+}
+
+/*
+void liberaTabellaClienti(Cliente** tabella)
+Specifica Sintattica:
+	liberaTabellaClienti(Cliente** tabella) -> void
+
+Specifica Semantica:
+	liberaTabellaClienti(tabella) -> void
+
+Pre-condizioni:
+1. La tabella hash tabella deve essere stata correttamente inizializzata.
+
+Post-condizioni:
+La funzione dealloca correttamente tutta la memoria precedentemente allocata, liberando sia
+ogni nodo cliente presente nella tabella hash sia la tabella stessa.
+*/
+
+void liberaTabellaClienti(Cliente** tabella) {
+    	for (int i = 0; i < DIM_TABELLA; i++) {
+        	Cliente* nodoCorrente = tabella[i];
+        	while (nodoCorrente) {
+            		Cliente* temp = nodoCorrente;
+            		nodoCorrente = nodoCorrente->nodoNext;
+            		free(temp);
+        	}
+    	}
+    	free(tabella);
+}
