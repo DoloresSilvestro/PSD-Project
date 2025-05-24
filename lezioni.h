@@ -17,3 +17,13 @@ typedef struct Lezione {
     int maxPartecipanti;
     struct Lezione* nodoNext;
 } Lezione;
+
+Lezione* creaLezione(int id, const char* nome, const char* giorno, int durata, int maxPrenotazioni);
+Lezione* aggiungiLezione(Lezione* testaLista, Lezione* nuovaLezione);
+Lezione* cercaLezione(Lezione* testaLista, int id);
+void modificaLezione(Lezione* lezione, const char* nome, const char* giorno, int durata, int maxPrenotazioni);
+Lezione* rimuoviLezione(Lezione* testaLista, int id);
+void stampaLezioni(Lezione* testaLista);
+void liberaLezioni(Lezione* testaLista);
+
+#endif
