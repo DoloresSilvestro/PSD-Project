@@ -8,3 +8,12 @@ Gli elementi principali sono:
 	maxPartecipanti: numero massimo di partecipanti consentiti per la lezione;
 	nodoNext: puntatore al nodo successivo della lista, per gestire dinamicamente l'elenco delle lezioni.
 */
+
+typedef struct Lezione {
+    int id;
+    char nome[30];
+    char giorno[30];
+    int durata;
+    int maxPartecipanti;
+    struct Lezione* nodoNext;
+} Lezione;
