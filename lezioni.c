@@ -3,18 +3,18 @@
 #include <string.h>
 #include "lezioni.h"
 
-/* Lezione* creaLezione(const char* nome, struct tm dataOra, int maxPartecipanti)
+/* Lezione* creaLezione(int id, const char* nome, const char* giorno, int durata, int maxPrenotazioni)
 
 Specifica Sintattica:
-creaLezione(const char*, struct tm, int) -> Lezione*
+creaLezione(int, const char*, const char*, int, int) -> Lezione*
 
 Specifica Semantica:
-creaLezione(nome, dataOra, maxPartecipanti) -> nuova
+creaLezione(id, nome, giorno, durata, maxPrenotazioni) -> nuova
 
 Pre-condizioni:
-  - nome è una stringa valida terminata da '\0'.
-  - maxPartecipanti è un intero positivo.
-  - dataOra è una struttura struct tm ben definita che rappresenta la data e l'orario della lezione.
+  - nome e giorno sono stringhe valide terminate da '\0'.
+  - durata e maxPrenotazioni sono interi positivi.
+  - id è un intero positivo che identifica univocamente una lezione.
 
 Post-condizioni:
   - Se i parametri sono validi e l’allocazione ha successo:
@@ -22,8 +22,7 @@ Post-condizioni:
       - Il campo partecipantiAttuali è inizializzato a 0.
       - Il campo nodoNext è inizializzato a NULL.
       - La funzione restituisce il puntatore al nuovo nodo.
-  - Se nome è NULL o maxPartecipanti <= 0, la funzione restituisce NULL.
-  - Se l’allocazione fallisce, viene stampato un messaggio di errore e la funzione restituisce NULL.
+  - Se l’allocazione fallisce, la funzione restituisce NULL.
 */
 
 Lezione* creaLezione(int id, const char* nome, const char* giorno, int durata, int maxPrenotazioni) {
@@ -105,6 +104,7 @@ void modificaLezione(Lezione* lezione, const char* nome, const char* giorno, int
 
     lezione->durata = durata;
     lezione->maxPrenotazioni = maxPrenotazioni;
+}
 
 /* Lezione* rimuoviLezione(Lezione* testaLista, int id)
 
