@@ -147,3 +147,30 @@ Lezione* rimuoviLezione(Lezione* testaLista, int id) {
 
     return testaLista;
 }
+/* Lezione* cercaLezione(Lezione *testaLista, int id)
+
+Specifica Sintattica:
+cercaLezione(Lezione*, int) -> Lezione*
+
+Specifica Semantica:
+cercaLezione(testaLista, id) -> lezioneTrovata
+
+Pre-condizioni:
+  - testaLista è un puntatore a una lista (anche vuota) di nodi Lezione.
+  - id è un intero positivo che rappresenta un identificatore valido di una lezione.
+
+Post-condizioni:
+  - Se esiste un nodo nella lista con id corrispondente, viene restituito il puntatore a quel nodo.
+  - Se non esiste alcun nodo con quell'id, viene restituito NULL.
+*/
+
+Lezione* cercaLezione(Lezione *testaLista, int id) {
+    Lezione *nodoCorrente = testaLista;
+    while (nodoCorrente) {
+        if (nodoCorrente->id == id) {
+            return nodoCorrente;
+        }
+        nodoCorrente = nodoCorrente->nodoNext;
+    }
+    return NULL;
+}
