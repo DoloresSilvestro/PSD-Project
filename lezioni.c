@@ -174,3 +174,59 @@ Lezione* cercaLezione(Lezione *testaLista, int id) {
     }
     return NULL;
 }
+
+/* void stampaLezioni(Lezione *testaLista)
+
+Specifica Sintattica:
+stampaLezioni(Lezione*) -> void
+
+Specifica Semantica:
+stampaLezioni(testaLista) -> stampa a schermo tutte le lezioni nella lista
+
+Pre-condizioni:
+  - testaLista è un puntatore a una lista (anche vuota) di nodi Lezione.
+
+Post-condizioni:
+  - Vengono stampati su console i dati di tutte le lezioni presenti nella lista.
+  - Se la lista è vuota, non viene stampato nulla o si può prevedere un messaggio opzionale.
+*/
+
+void stampaLezioni(Lezione *testaLista) {
+    Lezione *nodoCorrente = testaLista;
+    while (nodoCorrente) {
+        printf("ID: %d | Nome: %s | Giorno: %s | Durata: %d | Max: %d | Attuali: %d\n",
+               nodoCorrente->id,
+               nodoCorrente->nome,
+               nodoCorrente->giorno,
+               nodoCorrente->durata,
+               nodoCorrente->maxPrenotazioni,
+               nodoCorrente->partecipantiAttuali);
+        nodoCorrente = nodoCorrente->nodoNext;
+    }
+}
+
+/* void liberaLezioni(Lezione *testaLista)
+
+Specifica Sintattica:
+liberaLezioni(Lezione*) -> void
+
+Specifica Semantica:
+liberaLezioni(testaLista) -> libera la memoria allocata dinamicamente per ogni nodo della lista
+
+Pre-condizioni:
+  - testaLista è un puntatore a una lista (anche eventualmente vuota) di nodi Lezione allocati dinamicamente con malloc/calloc.
+
+Post-condizioni:
+  - Tutti i nodi della lista vengono liberati.
+  - Non è più possibile accedere agli elementi della lista dopo l'esecuzione della funzione.
+  - La memoria precedentemente occupata dai nodi viene rilasciata correttamente.
+*/
+
+void liberaLezioni(Lezione *testaLista) {
+    Lezione *nodoCorrente = testaLista;
+    while (nodoCorrente) {
+        Lezione *temp = nodoCorrente;
+        nodoCorrente = nodoCorrente->nodoNext;
+        free(temp);
+    }
+}
