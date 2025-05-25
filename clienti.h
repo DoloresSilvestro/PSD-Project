@@ -1,4 +1,4 @@
-#ifndef CLIENTI_h
+#ifndef CLIENTI_H
 #define CLIENTI_H
 
 #define DIM_TABELLA 97
@@ -22,10 +22,11 @@ Cliente** inizializzaTabellaClienti();
 void inserisciCliente(Cliente** tabella, const char* codiceFiscale, const char* nome, const char* cognome);
 Cliente* cercaCliente(Cliente** tabella, const char* codiceFiscale);
 int rimuoviCliente(Cliente** tabella, const char* codiceFiscale);
+void modificaCliente(Cliente* cliente, const char* nuovoNome, const char* nuovoCognome)
+void modificaCodiceFiscale(Cliente** tabella, const char* codiceFiscaleVecchio, const char* codiceFiscaleNuovo, const char* nome, const char* cognome)
 void stampaClienti(Cliente** tabella);
 void liberaTabellaClienti(Cliente** tabella);
 unsigned int hash(const char* codiceFiscale);
 
 #endif
-
 
