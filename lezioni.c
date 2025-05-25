@@ -94,7 +94,7 @@ Post-condizioni:
   - Se lezione è NULL, la funzione non esegue alcuna modifica.
 */
 
-void modificaLezione(Lezione *lezione, const char *nome, const char *giorno, int durata, int maxPrenotazioni) {
+void modificaLezione(Lezione* lezione, const char* nome, const char* giorno, int durata, int maxPrenotazioni) {
     if (!lezione) return;
 
     strncpy(lezione->nome, nome, sizeof(lezione->nome) - 1);
@@ -105,3 +105,45 @@ void modificaLezione(Lezione *lezione, const char *nome, const char *giorno, int
 
     lezione->durata = durata;
     lezione->maxPrenotazioni = maxPrenotazioni;
+
+/* Lezione* rimuoviLezione(Lezione* testaLista, int id)
+
+Specifica Sintattica:
+rimuoviLezione(Lezione*, int) -> Lezione*
+
+Specifica Semantica:
+rimuoviLezione(testaLista, id) -> nuovaLista
+
+Pre-condizioni:
+  - testaLista è un puntatore a una lista (anche vuota) di nodi Lezione.
+  - id è un intero positivo che identifica univocamente una lezione.
+
+Post-condizioni:
+  - Se esiste una lezione con l'id specificato, essa viene rimossa dalla lista e la memoria liberata.
+  - Se la lezione da rimuovere era in testa, la nuova testa viene aggiornata.
+  - Se l'id non è presente, la lista resta invariata.
+  - Viene restituito il puntatore alla testa aggiornata della lista.
+*/
+
+Lezione* rimuoviLezione(Lezione* testaLista, int id) {
+    Lezione* nodoCorrente = testaLista;
+    Lezione* nodoPrecedente = NULL;
+
+    while (nodoCorrente != NULL) {
+        if (nodoCorrente->id == id) {
+            if (nodoPrecedente == NULL) {
+                // Rimozione in testa
+                testaLista = nodoCorrente->nodoNext;
+            } else {
+                // Rimozione in mezzo o in coda
+                nodoPrecedente->nodoNext = nodoCorrente->nodoNext;
+            }
+            free(nodoCorrente);
+            break;
+        }
+        nodoPrecedente = nodoCorrente;
+        nodoCorrente = nodoCorrente->nodoNext;
+    }
+
+    return testaLista;
+}
