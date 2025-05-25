@@ -41,8 +41,7 @@ Lezione* creaLezione(int id, const char* nome, const char* giorno, int durata, i
         return nuovaLezione;
 }
 
-/*
-Lezione* aggiungiLezione(Lezione *testaLista, Lezione *nuovaLezione)
+/* Lezione* aggiungiLezione(Lezione *testaLista, Lezione *nuovaLezione)
 
 Specifica Sintattica:
 aggiungiLezione(Lezione*, Lezione*) -> Lezione*
@@ -75,3 +74,34 @@ Lezione* aggiungiLezione(Lezione* testaLista, Lezione* nuovaLezione) {
     nodoCorrente->nodoNext = nuovaLezione;
     return testaLista;
 }
+
+/* void modificaLezione(Lezione *lezione, const char *nome, const char *giorno, int durata, int maxPrenotazioni)
+
+Specifica Sintattica:
+modificaLezione(Lezione*, const char*, const char*, int, int) -> void
+
+Specifica Semantica:
+modificaLezione(lezione, nome, giorno, durata, maxPrenotazioni)
+
+Pre-condizioni:
+  - lezione è un puntatore valido a un nodo Lezione esistente.
+  - nome e giorno sono stringhe valide terminate da '\0'.
+  - durata e maxPrenotazioni sono interi positivi e coerenti.
+
+Post-condizioni:
+  - I campi nome, giorno, durata e maxPrenotazioni della lezione vengono aggiornati con i nuovi valori passati.
+  - La funzione non restituisce alcun valore.
+  - Se lezione è NULL, la funzione non esegue alcuna modifica.
+*/
+
+void modificaLezione(Lezione *lezione, const char *nome, const char *giorno, int durata, int maxPrenotazioni) {
+    if (!lezione) return;
+
+    strncpy(lezione->nome, nome, sizeof(lezione->nome) - 1);
+    lezione->nome[sizeof(lezione->nome) - 1] = '\0';
+
+    strncpy(lezione->giorno, giorno, sizeof(lezione->giorno) - 1);
+    lezione->giorno[sizeof(lezione->giorno) - 1] = '\0';
+
+    lezione->durata = durata;
+    lezione->maxPrenotazioni = maxPrenotazioni;
