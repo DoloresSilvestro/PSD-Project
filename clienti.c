@@ -44,7 +44,7 @@ unsigned int hash(const char* codiceFiscale) {
 	while (*codiceFiscale) {
         	somma += (unsigned char)*codiceFiscale++;
     	}
-    	return somma % DIM_TABELLA;
+    return somma % DIM_TABELLA;
 }
 
 /*
@@ -66,7 +66,7 @@ Post-condizioni:
 La funzione, essendo void, non restituisce alcun valore, ma ha un side effect: in caso di successo (return 1),
 alloca dinamicamente un nuovo nodo di tipo Cliente contenente i dati forniti,
 che viene inserito nella lista associata alla posizione calcolata nella tabella hash.
-Altrimenti (return 0), l'allocazione fallisce senza apportare modifiche alla tabella.
+Altrimenti (return 0), l'allocazione fallisce senza apportare modifice alla tabella.
 */
 
 void inserisciCliente(Cliente** tabella, const char* codiceFiscale, const char* nome, const char* cognome) {
@@ -74,7 +74,7 @@ void inserisciCliente(Cliente** tabella, const char* codiceFiscale, const char* 
    	Cliente* nuovoCliente = (Cliente*) calloc(1, sizeof(Cliente));
     		if (!nuovoCliente) {
         		return 0;
-   	}
+   		 }
 
 	strncpy(nuovoCliente->codiceFiscale, codiceFiscale, 16);
 	nuovoCliente->codiceFiscale[16] = '\0'
@@ -111,10 +111,10 @@ Cliente* cercaCliente(Cliente** tabella, const char* codiceFiscale) {
 
 	while (nodoCorrente) {
 		if (strcmp(nodoCorrente->codiceFiscale, codiceFiscale) == 0) {
-            		return nodoCorrente;
-        	}
+            	return nodoCorrente;
+        }
 		nodoCorrente = nodoCorrente->nodoNext;
-    	}
+    }
 	return NULL;
 }
 
@@ -146,17 +146,62 @@ int rimuoviCliente(Cliente** tabella, const char* codiceFiscale) {
 	while (nodoCorrente) {
         	if (strcmp(nodoCorrente->codiceFiscale, codiceFiscale) == 0) {
             		if (nodoPrecedente) {
-                		nodoPrecedente->nodoNext = nodoCorrente->nodoNext;
-            		} else {
+                	nodoPrecedente->nodoNext = nodoCorrente->nodoNext;
+            } else {
 				tabella[indice] = nodoCorrente->nodoNext;
-            		}
-            		free(nodoCorrente);
-            		return 1;
-        	}
-        	nodoPrecedente = nodoCorrente;
-        	nodoCorrente = nodoCorrente->nodoNext;
+            }
+            free(nodoCorrente);
+            return 1;
+        }
+        nodoPrecedente = nodoCorrente;
+        nodoCorrente = nodoCorrente->nodoNext;
 	}
 	return 0;
+}
+
+/*
+void modificaCliente(Cliente* cliente, const char* nuovoNome, const char* nuovoCognome)
+Specifica Sintattica:
+	modificaCliente(Cliente*, const char*, const char*) -> void
+
+Specifica Semantica:
+	modificaCliente(cliente, nuovoNome, nuovoCognome) -> void
+
+Pre-condizioni:
+1. La tabella hash dev'essere correttamente inizializzata.
+2. I parametri nuovoNome e nuovoCognome devono essere stringhe terminate con '\0'
+
+Post-condizioni:
+La funzione non restuisce alcun valore, essendo void, ma produce un side effect:
+Accede alla struttura cambiando l'anagrafica di un cliente.
+*/
+
+void modificaCliente(Cliente* cliente, const char* nuovoNome, const char* nuovoCognome) {
+	strcpy(cliente->nome, nuovoNome);
+	strcpy(cliente->cognome, nuovoCognome);
+}
+
+/*
+void modificaCodiceFiscale(Cliente** tabella, const char* codiceFiscaleVecchio,
+				const char* codiceFiscaleNuovo, const char* nome, const char* cognome)
+Specifica Sintattica:
+	modificaCodiceFiscale(Cliente**, const char*, const char*, const char*, const char*) -> void
+
+Specifica Semantica:
+	modificaCodiceFiscale(tabella, codiceFiscaleVecchio, codiceFiscaleNuovo, nome, cognome) -> void
+
+Pre-condizioni:
+1. La tabella hash dev'essere correttamente inizializzata.
+2. I parametri codiceFiscaleVecchio, codiceFiscaleNuovo, nome e cognome devono essere stringhe terminate con '\0'
+
+Post-condizioni:
+La funzione non restuisce alcun valore, essendo void, ma produce un side effect:
+Accede alla struttura rimuovendo il cliente con il codice fiscale errato, e inserendo i nuovi dati nello stesso bucket dell'hash.
+*/
+
+void modificaCodiceFiscale(Cliente** tabella, const char* codiceFiscaleVecchio, const char* codiceFiscaleNuovo, const char* nome, const char* cognome) {
+	rimuoviCliente(*tabella, codiceFiscaleVecchio);
+	inserisciCliente(*tabella, codiceFiscaleNuovo, nome, cognome);
 }
 
 /*
@@ -175,16 +220,16 @@ La funzione non restituisce alcun valore, ma ha un effetto collaterale (side eff
 */
 
 void stampaClienti(Cliente** tabella) {
-    	for (int i = 0; i < DIM_TABELLA; i++) {
-        	Cliente* nodoCorrente = tabella[i];
-        	while (nodoCorrente) {
-            		printf("CF: %s | Nome: %s %s\n",
-				nodoCorrente->codiceFiscale,
-				nodoCorrente->nome,
-				nodoCorrente->cognome);
-            		nodoCorrente = nodoCorrente->nodoNext;
-        	}
-    	}
+    for (int i = 0; i < DIM_TABELLA; i++) {
+        Cliente* nodoCorrente = tabella[i];
+        while (nodoCorrente) {
+            printf("CF: %s | Nome: %s %s\n",
+			nodoCorrente->codiceFiscale,
+			nodoCorrente->nome,
+			nodoCorrente->cognome);
+            nodoCorrente = nodoCorrente->nodoNext;
+        }
+    }
 }
 
 /*
@@ -204,13 +249,13 @@ ogni nodo cliente presente nella tabella hash sia la tabella stessa.
 */
 
 void liberaTabellaClienti(Cliente** tabella) {
-    	for (int i = 0; i < DIM_TABELLA; i++) {
-        	Cliente* nodoCorrente = tabella[i];
-        	while (nodoCorrente) {
+	for (int i = 0; i < DIM_TABELLA; i++) {
+		Cliente* nodoCorrente = tabella[i];
+		while (nodoCorrente) {
             		Cliente* temp = nodoCorrente;
             		nodoCorrente = nodoCorrente->nodoNext;
             		free(temp);
-        	}
-    	}
+		}
+	}
     	free(tabella);
 }
