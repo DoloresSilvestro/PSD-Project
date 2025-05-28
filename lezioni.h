@@ -1,6 +1,7 @@
-/*
-La struttura Lezione rappresenta un singolo nodo di una lista collegata che gestisce le lezioni disponibili in palestra.
-Gli elementi principali sono:
+#ifndef LEZIONI_H
+#define LEZIONI_H
+
+/* La struttura Lezione rappresenta un singolo nodo di una lista collegata che gestisce le lezioni disponibili in palestra. Gli elementi principali sono:
 	id: identificativo univoco della lezione;
 	nome: nome della lezione (es. "Yoga", "Pilates");
 	giorno: giorno della settimana in cui si tiene la lezione;
